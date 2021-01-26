@@ -27,4 +27,7 @@ Route::prefix("admin")->namespace("Admin")->middleware('auth')->name('admin.')->
 //tutte le rotte all'interno di questo gruppo inizieranno con admin/
     Route::get('/', 'HomeController@index')->name('index');
 
+    //gestisco le rotte delle CRUD sempre all'interno del gruppo di rotte riguardanti l'admin
+    Route::resource("/posts", "PostController");
+
 });
