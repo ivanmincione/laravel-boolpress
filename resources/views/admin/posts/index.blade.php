@@ -21,7 +21,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->slug }}</td>
                             <td>
-                                <a class="btn btn-info" href="#">
+                                <a class="btn btn-info" href="{{ route('admin.posts.show', ['post' => $post->id ]) }}">
                                     info
                                 </a>
                             </td>
