@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "HomeController@index")->name("index");
+Route::get("/contacts","HomeController@contacts")->name("contacts");
+Route::get("/about","HomeController@about")->name("about");
 
 
-Auth::routes(["register" => false]); //disabilito la rotta di registrazione al sito 
+Auth::routes(["register" => false]); //disabilito la rotta di registrazione al sito
 
 
 //middleware da inserire su tutte le rotto da tutelare
