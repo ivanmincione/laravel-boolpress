@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', "HomeController@index")->name("index");
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth'); //middleware da inserire su tutte le rotto da tutelare
+
+//middleware da inserire su tutte le rotto da tutelare
+Route::prefix("admin")->namespace("Admin")->middleware('auth')->name('admin.')->group( function() {
+
+//tutte le rotte all'interno di questo gruppo inizieranno con admin/
+    Route::get('/', 'HomeController@index')->name('index');
+
+});
