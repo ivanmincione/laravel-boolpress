@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', "HomeController@index")->name("index");
 Route::get("/contacts","HomeController@contacts")->name("contacts");
 Route::get("/about","HomeController@about")->name("about");
+Route::get("/posts","PostController@index")->name("posts.index");
 
 
 Auth::routes(["register" => false]); //disabilito la rotta di registrazione al sito
