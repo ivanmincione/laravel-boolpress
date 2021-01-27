@@ -7,7 +7,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Modifica post {{ $post->id }}</h1>
                 <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">
-                    Return to posts 
+                    Return to posts
                 </a>
             </div>
             <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post">
@@ -20,6 +20,17 @@
                 <div class="form-group">
                     <label>Contenuto</label>
                     <textarea name="content" class="form-control" rows="10" placeholder="Inizia a scrivere qualcosa..." required>{{ $post->content }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" name="category_id">
+                        <option value="">-- select category --</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ $category->id == $post->category_id ? 'selected=selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">

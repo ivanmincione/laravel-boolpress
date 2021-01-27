@@ -97,10 +97,16 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if(!$post) {
+        if($post) {
+
+            $data = [
+                'post' => $post,
+                'categories' => Category::all()
+            ];
+        } else {
             abort(404);
         }
-        return view('admin.posts.edit', ['post' => $post]);
+        return view('admin.posts.edit', $data);
     }
 
     /**
