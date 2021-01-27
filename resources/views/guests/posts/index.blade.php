@@ -8,10 +8,12 @@
 
                     @foreach ($posts as $post)
                         <div class="box">
-                            <h2> {{ $post->title }} </h2>
+                            <h2>
+                                 <a href="{{ route('posts.show', ['slug' => $post->slug]) }}">
+                                {{ $post->title }}
+                                </a>
+                            </h2>
                             <p> {{ $post->slug }}</p>
-
-
                         </div>
 
                     @endforeach

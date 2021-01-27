@@ -17,6 +17,7 @@ Route::get('/', "HomeController@index")->name("index");
 Route::get("/contacts","HomeController@contacts")->name("contacts");
 Route::get("/about","HomeController@about")->name("about");
 Route::get("/posts","PostController@index")->name("posts.index");
+Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
 
 
 Auth::routes(["register" => false]); //disabilito la rotta di registrazione al sito
