@@ -11,6 +11,7 @@
                 </div>
                 <div class="box">
                     <h1> {{ $post->title }} </h1>
+                    <p>Category : {{ $post->category ? $post->category->name : 'n.a.' }}</p>
                     <p>Content : {{ $post->content }}</p>
                 </div>
             </div>

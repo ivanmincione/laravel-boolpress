@@ -14,6 +14,7 @@
                     <p>Type : {{ $post->type }} </p>
                     <p>Description : {{ $post->description }}</p>
                     <p>Content : {{ $post->content }}</p>
+                    <p>Category : {{ $post->category ? $post->category->name : 'n.a.' }}</p>
                 </div>
             </div>
         </div>
