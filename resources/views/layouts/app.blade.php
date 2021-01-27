@@ -62,7 +62,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 {{-- se l'admin è loggato appare il link che riporta alla dashboard --}}
-                                <a class="d-inline-block btn btn-info" href="{{ route("admin.index") }}"> return to dashboard</a>
+                                <a class="d-inline-block btn btn-info" href="{{ route("admin.index") }}"> Return to dashboard</a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
