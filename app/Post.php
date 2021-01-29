@@ -12,4 +12,8 @@ class Post extends Model
     public function category() {
         return $this->belongsTo('App\Category'); // mappo la cartella secondaria
     }
+
+    public function tags() {
+        return $this->belongsToMany('App\Tag'); // mappo la relazione tra i Model Post e Tag
+    }
 }
