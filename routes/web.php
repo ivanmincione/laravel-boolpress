@@ -19,6 +19,8 @@ Route::get("/about","HomeController@about")->name("about");
 Route::get("/posts","PostController@index")->name("posts.index");
 Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
 
+Route::get('/categories/{slug}', 'CategoryController@show')->name('categories.show');
+
 
 Auth::routes(["register" => false]); //disabilito la rotta di registrazione al sito
 
@@ -32,6 +34,6 @@ Route::prefix("admin")->namespace("Admin")->middleware('auth')->name('admin.')->
     //gestisco le rotte delle CRUD sempre all'interno del gruppo di rotte riguardanti l'admin
     Route::resource("/posts", "PostController");
 
-    
+
 
 });
