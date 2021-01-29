@@ -159,6 +159,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // prima della funzione di delete()
+        // basta sincronizzare un array vuoto in modo da permetterer la cancellazione del post non andando più in contrasto con le relazioni tra le chiavi delle tab
+        $post->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.index');
     }
