@@ -12,7 +12,7 @@
                 <div class="box">
                     <h1> {{ $post->title }} </h1>
                     {{-- <p>Category : {{ $post->category ? $post->category->name : 'n.a.' }}</p> --}}
-                    <p>Category :
+                    <p> Category :
                         @if ($post->category)
                             <a href="{{ route('categories.show', ['slug' => $post->category->slug]) }}">
                                 {{ $post->category->name }}
@@ -20,9 +20,17 @@
                         @else
                             <span> n.a.</span>
                         @endif
-
                     </p>
-                    <p>Content : {{ $post->content }}</p>
+
+                    <p> Content : {{ $post->content }}</p>
+
+                    <p> Tags:
+                        @forelse ($post->tags as $tag)
+                            #{{ $tag->name }}{{ !$loop->last ? ' - ' : '' }}
+                        @empty
+                            n.a.
+                        @endforelse
+                    </p>
                 </div>
             </div>
         </div>

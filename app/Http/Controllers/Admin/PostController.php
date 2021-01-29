@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 use App\Category;
 
+use App\Tag;
+
 class PostController extends Controller
 {
     /**
@@ -34,7 +36,8 @@ class PostController extends Controller
     public function create() //recuperare le category
     {
         $data = [
-            "categories" => Category::all()
+            "categories" => Category::all(),
+            'tags' => Tag::all(),
         ];
         return view('admin.posts.create', $data);
     }
@@ -68,6 +71,8 @@ class PostController extends Controller
         // assegno lo slug al post
         $newPost->slug = $slug;
         $newPost->save();
+        // dopo save() aggiungerer la sincronizzazione sync() dei dati con i tags
+        $newPost->tags()->sync($form_data['tags']);
         return redirect()->route('admin.posts.index'); //->with('success', 'Salvataggio avvenuto correttamente');
     }
 
@@ -101,7 +106,8 @@ class PostController extends Controller
 
             $data = [
                 'post' => $post,
-                'categories' => Category::all()
+                'categories' => Category::all(),
+                'tags' => Tag::all(),
             ];
         } else {
             abort(404);
@@ -140,6 +146,8 @@ class PostController extends Controller
             $form_data['slug'] = $slug;
         }
         $post->update($form_data);
+        // utilizzare sync() per sincronizzare l'aggiornamento dei dati
+        $post->tags()->sync($form_data['tags']);
         return redirect()->route('admin.posts.index');
     }
 

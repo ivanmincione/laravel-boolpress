@@ -11,10 +11,16 @@
                 <div class="box">
                     <h2> {{ $post->title }} </h2>
                     <p>Slug: {{ $post->slug }}</p>
-                    <p>Type : {{ $post->type }} </p>
                     <p>Description : {{ $post->description }}</p>
                     <p>Content : {{ $post->content }}</p>
                     <p>Category : {{ $post->category ? $post->category->name : 'n.a.' }}</p>
+                    <p>Tags :
+                        @forelse ($post->tags as $tag)
+                            {{ $tag->name }}{{ !$loop->last ? ',' : '' }}
+                        @empty
+                            <span>n.a.</span>
+                        @endforelse
+                    </p>
                 </div>
             </div>
         </div>
