@@ -50,6 +50,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // validazione dei dati inseriti nel form
+        $request->validate([
+           'title' => 'required|max:255',
+           'content' => 'required',
+           'category_id' => 'nullable|exists:categories,id',
+           'tags' => 'exists:tags,id'
+       ]);
         // //recupero i dati attraverso all() e li assegno a $data
         $form_data = $request->all();
         $newPost = new Post();
@@ -73,6 +80,11 @@ class PostController extends Controller
         $newPost->save();
         // dopo save() aggiungerer la sincronizzazione sync() dei dati con i tags
         $newPost->tags()->sync($form_data['tags']);
+        // verifico se sono stati selezionati dei tag
+        if(array_key_exists('tags', $form_data)) {
+            // aggiungo i tag al post
+            $newPost->tags()->sync($form_data['tags']);
+        }
         return redirect()->route('admin.posts.index'); //->with('success', 'Salvataggio avvenuto correttamente');
     }
 
@@ -147,7 +159,10 @@ class PostController extends Controller
         }
         $post->update($form_data);
         // utilizzare sync() per sincronizzare l'aggiornamento dei dati
-        $post->tags()->sync($form_data['tags']);
+        if(array_key_exists('tags', $form_data)) {
+            // aggiungo i tag al post
+            $post->tags()->sync($form_data['tags']);
+        }
         return redirect()->route('admin.posts.index');
     }
 
