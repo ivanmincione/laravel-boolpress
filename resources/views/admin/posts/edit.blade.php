@@ -10,27 +10,49 @@
                     Return to posts
                 </a>
             </div>
+            {{-- se sono presenti errori nei dati inseriti nel form --}}
+            @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+
             <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
                     <label>Titolo</label>
-                    <input type="text" name="title" class="form-control" placeholder="Inserisci il titolo" value="{{ $post->title }}" maxlength="255" required>
+                    <input type="text" name="title" class="form-control" placeholder="Inserisci il titolo del post" value="{{ old('title', $post->title) }}" required>
+                    @error('title')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Contenuto</label>
-                    <textarea name="content" class="form-control" rows="10" placeholder="Inizia a scrivere qualcosa..." required>{{ $post->content }}</textarea>
+                    <textarea name="content" class="form-control" rows="8" cols="80" placeholder="Contenuto del post" required>{{ old('content', $post->content) }}</textarea>
+                    @error('content')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Category</label>
                     <select class="form-control" name="category_id">
                         <option value="">-- select category --</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ $category->id == $post->category_id ? 'selected=selected' : '' }}>
+                            <option value="{{ $category->id }}"
+                                {{ $category->id == old('category_id', $post->category_id) ? 'selected=selected' : '' }}>
                                 {{ $category->name }}
                             </option>
                         @endforeach
                     </select>
+                    @error('category_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 {{-- checkbox per i tags --}}
                 <div class="form-group">
@@ -38,13 +60,22 @@
                     @foreach ($tags as $tag)
                         <div class="form-check">
                             {{-- se il post da modificare contiene il tag aggiungi checked --}}
-                            <input name="tags[]" class="form-check-input" type="checkbox" value="{{ $tag->id }}"
-                            {{ $post->tags->contains($tag) ? 'checked=checked' : '' }}>
+                            {{-- divido le due casistiche con una if --}}
+                            @if($errors->any())
+                                <input name="tags[]" class="form-check-input" type="checkbox" value="{{ $tag->id }}"
+                                {{ in_array($tag->id, old('tags', [])) ? 'checked=checked' : '' }}>
+                            @else
+                                <input name="tags[]" class="form-check-input" type="checkbox" value="{{ $tag->id }}"
+                                {{ $post->tags->contains($tag) ? 'checked=checked' : '' }}>
+                            @endif
                             <label class="form-check-label">
                                 {{ $tag->name }}
                             </label>
                         </div>
                     @endforeach
+                    @error('tags')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
