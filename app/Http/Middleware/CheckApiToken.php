@@ -13,7 +13,7 @@ class CheckApiToken
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next) // all'interno del metodo "handle" va inserita tutta la logica riguardante il middleware
     {
         return $next($request);
     }
