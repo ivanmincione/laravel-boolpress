@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 
 // creo una rotta API
 
-Route::get('/posts', 'Api\PostController@index');
+Route::post('/posts', 'Api\PostController@index');
