@@ -152,7 +152,8 @@ class PostController extends Controller
            'title' => 'required|max:255',
            'content' => 'required',
            'category_id' => 'nullable|exists:categories,id',
-           'tags' => 'exists:tags,id'
+           'tags' => 'exists:tags,id',
+           'image' => 'nullable|image|max:512'
        ]);
         $form_data = $request->all();
         // verifico se il titolo ricevuto dal form è diverso dal vecchio titolo
@@ -175,6 +176,14 @@ class PostController extends Controller
             // assegno lo slug al post
             $form_data['slug'] = $slug;
         }
+
+        // verifico se è stata caricata un'immagine
+        if(array_key_exists('image', $form_data)) {
+            // salvo l'immagine e recupero la path
+            $cover_path = Storage::put('post_covers', $form_data['image']);
+            $form_data['cover'] = $cover_path;
+        }
+
         $post->update($form_data);
         // utilizzare sync() per sincronizzare l'aggiornamento dei dati
         if(array_key_exists('tags', $form_data)) {

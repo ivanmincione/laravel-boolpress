@@ -22,9 +22,21 @@
                 @endif
             </div>
 
-            <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post">
+            <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <div class="form-group">
+                    @if($post->cover)
+                        <p>Immagine di copertina presente:</p>
+                        <img class="d-block" src="{{ asset('storage/' . $post->cover) }}">
+                    @else
+                        <p>Immagine di copertina non post presente</p>
+                    @endif
+                    <label>Carica una nuova immagine di copertina</label>
+                    <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image">
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 <div class="form-group">
                     <label>Titolo</label>
                     <input type="text" name="title" class="form-control" placeholder="Inserisci il titolo del post" value="{{ old('title', $post->title) }}" required>
