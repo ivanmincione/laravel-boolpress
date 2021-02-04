@@ -20,8 +20,15 @@
                     @endif
                 </div>
 
-                <form method="POST" action="{{ route('admin.posts.store') }}">
+                <form method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group">
+                        <label>Immagine di copertina</label>
+                        <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image">
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label>Title</label>
                         <input type="text" name="title" class="form-control" required value="{{ old('title') }}" placeholder="Inserisci il titolo del post">
