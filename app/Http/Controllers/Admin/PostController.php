@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\Category;
 
 use App\Tag;
@@ -55,11 +57,20 @@ class PostController extends Controller
            'title' => 'required|max:255',
            'content' => 'required',
            'category_id' => 'nullable|exists:categories,id',
-           'tags' => 'exists:tags,id'
+           'tags' => 'exists:tags,id',
+           'image' => 'nullable|image|max:512'
        ]);
         // //recupero i dati attraverso all() e li assegno a $data
         $form_data = $request->all();
         $newPost = new Post();
+
+        // verifico se è stata caricata un'immagine
+        if(array_key_exists('image', $form_data)) {
+            // salvo l'immagine e recupero la path
+            $cover_path = Storage::put('post_covers', $form_data['image']);
+            $form_data['cover'] = $cover_path;
+        }
+
         $newPost->fill($form_data);
         // genero lo slug
         $slug = Str::slug($newPost->title);
