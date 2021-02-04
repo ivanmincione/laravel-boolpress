@@ -11,6 +11,13 @@
                 <div class="box">
                     <h2> {{ $post->title }} </h2>
                     <p>Slug: {{ $post->slug }}</p>
+                    <div class="">
+                        @if($post->cover)
+                            <img src="{{ asset('storage/' . $post->cover) }}" alt="n.a.">
+                        @else
+                            <p>copertina non presente</p>
+                        @endif
+                    </div>
                     <p>Description : {{ $post->description }}</p>
                     <p>Content : {{ $post->content }}</p>
                     <p>Category : {{ $post->category ? $post->category->name : 'n.a.' }}</p>

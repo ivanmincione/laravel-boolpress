@@ -9,9 +9,11 @@
                         All posts
                     </a>
                 </div>
+                @if($post->cover)
+                    <img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                @endif
                 <div class="box">
                     <h1> {{ $post->title }} </h1>
-                    {{-- <p>Category : {{ $post->category ? $post->category->name : 'n.a.' }}</p> --}}
                     <p> Category :
                         @if ($post->category)
                             <a href="{{ route('categories.show', ['slug' => $post->category->slug]) }}">
